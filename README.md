@@ -10,13 +10,38 @@ A Chrome extension that allows you to save your ChatGPT conversations as Markdow
 
 ## Installation
 
-Since this extension is not yet in the Chrome Web Store, you can install it manually:
+Since this extension is not yet in the Chrome Web Store, you need to download the source code and install it manually.
 
-1.  **Clone or Download** this repository to your local machine.
-2.  Open Google Chrome and navigate to `chrome://extensions`.
-3.  Enable **Developer mode** in the top right corner.
-4.  Click the **Load unpacked** button.
-5.  Select the directory where you saved this project (e.g., `Save-ChatGPT-Thread`).
+**Repository URL**: [https://github.com/pbeens/Save-ChatGPT-Thread](https://github.com/pbeens/Save-ChatGPT-Thread)
+
+### Step 1: Get the Code
+
+Choose one of the following methods to get the code:
+
+#### Option A: Command Line (Git)
+Open your terminal and run:
+```sh
+git clone https://github.com/pbeens/Save-ChatGPT-Thread.git
+```
+
+#### Option B: GitHub Desktop
+1.  Open GitHub Desktop.
+2.  Go to **File** > **Clone Repository**.
+3.  Select the **URL** tab.
+4.  Enter `https://github.com/pbeens/Save-ChatGPT-Thread` and click **Clone**.
+
+#### Option C: GitHub Website (Download ZIP)
+1.  Go to [https://github.com/pbeens/Save-ChatGPT-Thread](https://github.com/pbeens/Save-ChatGPT-Thread).
+2.  Click the green **Code** button.
+3.  Select **Download ZIP**.
+4.  Extract the ZIP file to a folder on your computer.
+
+### Step 2: Install in Chrome
+
+1.  Open Google Chrome and navigate to `chrome://extensions`.
+2.  Enable **Developer mode** in the top right corner.
+3.  Click the **Load unpacked** button.
+4.  Select the directory where you saved/extracted the project (e.g., `Save-ChatGPT-Thread`).
 
 ## Usage
 
