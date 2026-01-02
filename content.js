@@ -24,6 +24,74 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     return true;
 });
 
+function nodeToMarkdown(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent;
+    }
+
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+        return "";
+    }
+
+    let childrenMarkdown = "";
+    node.childNodes.forEach(child => {
+        childrenMarkdown += nodeToMarkdown(child);
+    });
+
+    const tag = node.tagName.toUpperCase();
+
+    switch (tag) {
+        case "STRONG":
+        case "B":
+            return `**${childrenMarkdown}**`;
+        case "EM":
+        case "I":
+            return `*${childrenMarkdown}*`;
+        case "H1": return `\n# ${childrenMarkdown}\n`;
+        case "H2": return `\n## ${childrenMarkdown}\n`;
+        case "H3": return `\n### ${childrenMarkdown}\n`;
+        case "H4": return `\n#### ${childrenMarkdown}\n`;
+        case "H5": return `\n##### ${childrenMarkdown}\n`;
+        case "H6": return `\n###### ${childrenMarkdown}\n`;
+        case "P": return `\n${childrenMarkdown}\n`;
+        case "BR": return `\n`;
+        case "CODE":
+            if (node.parentNode.tagName === "PRE") {
+                return childrenMarkdown;
+            }
+            return `\`${childrenMarkdown}\``;
+        case "PRE":
+            const lang = node.className.match(/language-(\w+)/);
+            return `\n\`\`\`${lang ? lang[1] : ""}\n${childrenMarkdown}\n\`\`\`\n`;
+        case "UL": return `\n${childrenMarkdown}\n`;
+        case "OL": return `\n${childrenMarkdown}\n`;
+        case "LI":
+            const parent = node.parentNode.tagName;
+            const prefix = parent === "OL" ? "1. " : "* ";
+            return `${prefix}${childrenMarkdown}\n`;
+        case "BLOCKQUOTE":
+            return `\n> ${childrenMarkdown.split('\n').join('\n> ')}\n`;
+        case "TABLE": return `\n${childrenMarkdown}\n`;
+        case "THEAD": return childrenMarkdown;
+        case "TBODY": return childrenMarkdown;
+        case "TR":
+            let row = `| ${childrenMarkdown} |\n`;
+            // Add separator after header row
+            if (node.parentNode.tagName === "THEAD" || (node.parentNode.tagName === "TBODY" && !node.previousElementSibling)) {
+                const cells = node.querySelectorAll('th, td').length;
+                row += `| ${Array(cells).fill('---').join(' | ')} |\n`;
+            }
+            return row;
+        case "TH":
+        case "TD":
+            return `${childrenMarkdown.trim()} |`;
+        case "A":
+            return `[${childrenMarkdown}](${node.href})`;
+        default:
+            return childrenMarkdown;
+    }
+}
+
 function scrapeChatGPT() {
     let md = "# ChatGPT Conversation\n\n";
     const articles = document.querySelectorAll('article');
@@ -46,11 +114,11 @@ function scrapeChatGPT() {
         }
 
         const roleDisplay = role.charAt(0).toUpperCase() + role.slice(1);
-        let text = "";
         const contentDiv = article.querySelector('.markdown') || article.querySelector('[data-message-author-role]');
 
+        let text = "";
         if (contentDiv) {
-            text = contentDiv.innerText;
+            text = nodeToMarkdown(contentDiv);
         } else {
             text = article.innerText;
         }
@@ -64,33 +132,21 @@ function scrapeChatGPT() {
 function scrapeGemini() {
     let md = "# Gemini Conversation\n\n";
     
-    // Gemini uses different structures. 
-    // User messages are often in 'user-query' or 'div[title="User prompt"]'
-    // Model responses are often in 'model-response' or similar.
+    // Gemini messages
+    const possibleMessages = document.querySelectorAll('.user-query, .model-response, .query-content, .message-content');
     
-    const chatTurns = document.querySelectorAll('.chat-turn, query-content, message-content');
+    if (possibleMessages.length === 0) {
+        return "No Gemini messages found. Ensure you are on a Gemini chat page.";
+    }
     
-    if (chatTurns.length === 0) {
-        // Fallback or broader search
-        const possibleMessages = document.querySelectorAll('.user-query, .model-response, .query-content, .message-content');
-        if (possibleMessages.length === 0) {
-            return "No Gemini messages found. Ensure you are on a Gemini chat page.";
+    possibleMessages.forEach(msg => {
+        let role = "Assistant";
+        if (msg.classList.contains('user-query') || msg.classList.contains('query-content') || msg.closest('.user-query-container')) {
+            role = "User";
         }
         
-        possibleMessages.forEach(msg => {
-            let role = "Assistant";
-            if (msg.classList.contains('user-query') || msg.classList.contains('query-content') || msg.closest('.user-query-container')) {
-                role = "User";
-            }
-            md += `**${role}:**\n\n${msg.innerText}\n\n---\n\n`;
-        });
-        return md;
-    }
-
-    chatTurns.forEach((turn) => {
-        // This is a rough heuristic as Gemini's DOM is very fluid
-        const role = turn.closest('.user-query-container') || turn.classList.contains('user-query') ? "User" : "Assistant";
-        md += `**${role}:**\n\n${turn.innerText}\n\n---\n\n`;
+        const text = nodeToMarkdown(msg);
+        md += `**${role}:**\n\n${text}\n\n---\n\n`;
     });
 
     return md;
