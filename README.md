@@ -52,4 +52,8 @@ git clone https://github.com/pbeens/Save-ChatGPT-Thread.git
 
 ## Contributing
 
-Feel free to open issues or pull requests if you find bugs or want to suggest new features!
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
