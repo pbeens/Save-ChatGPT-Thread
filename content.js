@@ -26,7 +26,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 function nodeToMarkdown(node) {
     if (node.nodeType === Node.TEXT_NODE) {
-        return node.textContent;
+        // In tables, we want to be careful not to introduce extra columns via whitespace
+        const text = node.textContent;
+        // If parent is a table-related element, trim more aggressively
+        const inTable = node.parentElement && ["TR", "TD", "TH", "THEAD", "TBODY", "TABLE"].includes(node.parentElement.tagName.toUpperCase());
+        return inTable ? text.trim() : text;
     }
 
     if (node.nodeType !== Node.ELEMENT_NODE) {
@@ -43,23 +47,23 @@ function nodeToMarkdown(node) {
     switch (tag) {
         case "STRONG":
         case "B":
-            return `**${childrenMarkdown}**`;
+            return childrenMarkdown.trim() ? `**${childrenMarkdown.trim()}**` : "";
         case "EM":
         case "I":
-            return `*${childrenMarkdown}*`;
-        case "H1": return `\n# ${childrenMarkdown}\n`;
-        case "H2": return `\n## ${childrenMarkdown}\n`;
-        case "H3": return `\n### ${childrenMarkdown}\n`;
-        case "H4": return `\n#### ${childrenMarkdown}\n`;
-        case "H5": return `\n##### ${childrenMarkdown}\n`;
-        case "H6": return `\n###### ${childrenMarkdown}\n`;
-        case "P": return `\n${childrenMarkdown}\n`;
+            return childrenMarkdown.trim() ? `*${childrenMarkdown.trim()}*` : "";
+        case "H1": return `\n# ${childrenMarkdown.trim()}\n`;
+        case "H2": return `\n## ${childrenMarkdown.trim()}\n`;
+        case "H3": return `\n### ${childrenMarkdown.trim()}\n`;
+        case "H4": return `\n#### ${childrenMarkdown.trim()}\n`;
+        case "H5": return `\n##### ${childrenMarkdown.trim()}\n`;
+        case "H6": return `\n###### ${childrenMarkdown.trim()}\n`;
+        case "P": return `\n${childrenMarkdown.trim()}\n`;
         case "BR": return `\n`;
         case "CODE":
             if (node.parentNode.tagName === "PRE") {
                 return childrenMarkdown;
             }
-            return `\`${childrenMarkdown}\``;
+            return `\`${childrenMarkdown.trim()}\``;
         case "PRE":
             const lang = node.className.match(/language-(\w+)/);
             return `\n\`\`\`${lang ? lang[1] : ""}\n${childrenMarkdown}\n\`\`\`\n`;
@@ -68,14 +72,18 @@ function nodeToMarkdown(node) {
         case "LI":
             const parent = node.parentNode.tagName;
             const prefix = parent === "OL" ? "1. " : "* ";
-            return `${prefix}${childrenMarkdown}\n`;
+            return `${prefix}${childrenMarkdown.trim()}\n`;
         case "BLOCKQUOTE":
-            return `\n> ${childrenMarkdown.split('\n').join('\n> ')}\n`;
-        case "TABLE": return `\n${childrenMarkdown}\n`;
-        case "THEAD": return childrenMarkdown;
-        case "TBODY": return childrenMarkdown;
+            return `\n> ${childrenMarkdown.trim().split('\n').join('\n> ')}\n`;
+        case "TABLE": return `\n${childrenMarkdown.trim()}\n`;
+        case "THEAD": return childrenMarkdown.trim() + "\n";
+        case "TBODY": return childrenMarkdown.trim() + "\n";
         case "TR":
-            let row = `| ${childrenMarkdown} |\n`;
+            // Filter out empty parts that might have been caused by whitespace nodes
+            const rowContent = childrenMarkdown.split('|').map(s => s.trim()).filter(s => s.length > 0).join(' | ');
+            if (!rowContent) return "";
+            
+            let row = `| ${rowContent} |\n`;
             // Add separator after header row
             if (node.parentNode.tagName === "THEAD" || (node.parentNode.tagName === "TBODY" && !node.previousElementSibling)) {
                 const cells = node.querySelectorAll('th, td').length;
@@ -84,9 +92,9 @@ function nodeToMarkdown(node) {
             return row;
         case "TH":
         case "TD":
-            return `${childrenMarkdown.trim()} |`;
+            return `| ${childrenMarkdown.trim()}`;
         case "A":
-            return `[${childrenMarkdown}](${node.href})`;
+            return `[${childrenMarkdown.trim()}](${node.href})`;
         default:
             return childrenMarkdown;
     }
