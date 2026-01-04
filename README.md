@@ -52,8 +52,20 @@ git clone https://github.com/pbeens/Save-ChatGPT-Thread.git
 
 ## Contributing
 
+Have feedback? Please open an issue:
+
+- **Bug reports**: Include browser version, OS, extension version, steps to reproduce, and what you expected vs. what happened.
+- **Suggestions**: Describe the improvement and why it helps. Screenshots or brief examples are great.
+
+## Using with Gemini
+
+The extension can also be used on Gemini threads, but formatting isn’t perfect yet—superscripts and subscripts may not render as expected. If you try it there, keep those limitations in mind and feel free to file an issue with examples.
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Support
+
+If you find this useful, please [consider buying me a coffee](https://buymeacoffee.com/pbeens)!
 
