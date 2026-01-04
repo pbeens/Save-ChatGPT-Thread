@@ -59,6 +59,8 @@ function nodeToMarkdown(node) {
         case "H6": return `\n###### ${childrenMarkdown.trim()}\n`;
         case "P": return `\n${childrenMarkdown.trim()}\n`;
         case "BR": return `\n`;
+        case "SUP": return childrenMarkdown.trim() ? `<sup>${childrenMarkdown.trim()}</sup>` : "";
+        case "SUB": return childrenMarkdown.trim() ? `<sub>${childrenMarkdown.trim()}</sub>` : "";
         case "CODE":
             if (node.parentNode.tagName === "PRE") {
                 return childrenMarkdown;
@@ -139,10 +141,36 @@ function scrapeChatGPT() {
 
 function scrapeGemini() {
     let md = "# Gemini Conversation\n\n";
-    
-    // Gemini messages
-    const possibleMessages = document.querySelectorAll('.user-query, .model-response, .query-content, .message-content');
-    
+
+    // Collect Gemini messages, including those inside shadow DOM (assistant replies live there)
+    const selectors = [
+        '.user-query',
+        '.query-content',
+        '.user-query-container',
+        'message-content',
+        '[data-test-id="response-content"]'
+    ];
+
+    const seen = new Set();
+    const possibleMessages = [];
+
+    function walk(node) {
+        if (!node) return;
+
+        if (node.matches && node.matches(selectors.join(', ')) && !seen.has(node)) {
+            seen.add(node);
+            possibleMessages.push(node);
+        }
+
+        if (node.shadowRoot) {
+            walk(node.shadowRoot);
+        }
+
+        node.childNodes.forEach(child => walk(child));
+    }
+
+    walk(document.body);
+
     if (possibleMessages.length === 0) {
         return "No Gemini messages found. Ensure you are on a Gemini chat page.";
     }
