@@ -1,9 +1,9 @@
-﻿# Privacy Policy
+# Privacy Policy
 
 Last updated: 2026-01-04
 
 ## Overview
-ChatGPT Thread Saver runs entirely in your browser to export your chat threads as Markdown files. The extension does not collect, store, or transmit any personal data to external servers.
+Chat Thread Saver runs entirely in your browser to export your chat threads as Markdown files. The extension does not collect, store, or transmit any personal data to external servers.
 
 ## Data handling
 - The extension only processes page content on ChatGPT and Gemini when you click the save button.

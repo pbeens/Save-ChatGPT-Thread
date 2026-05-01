@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.1] - 2026-05-01
+
+### Changed
+
+- Renamed extension to **Chat Thread Saver** for better consistency across supported platforms (ChatGPT, Gemini, Grok).
+- Updated documentation and internal references to reflect the new name.
+
 ## [1.2.0] - 2026-05-01
 
 ### Added

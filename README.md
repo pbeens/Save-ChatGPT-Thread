@@ -1,4 +1,4 @@
-# ChatGPT Thread Saver
+# Chat Thread Saver
 
 A Chrome extension that allows you to save your ChatGPT, Google Gemini, and Grok conversations as clean, readable Markdown files.
 
@@ -14,7 +14,7 @@ A Chrome extension that allows you to save your ChatGPT, Google Gemini, and Grok
 
 Install directly from the **Chrome Web Store**:
 
-**[ChatGPT Thread Saver on Chrome Web Store](https://chromewebstore.google.com/detail/chatgpt-thread-saver/monacbfpcobmaoijgepedjklkpknponk)**
+**[Chat Thread Saver on Chrome Web Store](https://chromewebstore.google.com/detail/chatgpt-thread-saver/monacbfpcobmaoijgepedjklkpknponk)**
 
 ### Manual Installation (Alternative)
 
@@ -49,7 +49,7 @@ git clone https://github.com/pbeens/Save-ChatGPT-Thread.git
 1.  Open Google Chrome and navigate to `chrome://extensions`.
 2.  Enable **Developer mode** in the top right corner.
 3.  Click the **Load unpacked** button.
-4.  Select the directory where you saved/extracted the project (e.g., `Save-ChatGPT-Thread`).
+4.  Select the directory where you saved/extracted the project (e.g., `Chat-Thread-Saver`).
 
 ## Usage
 

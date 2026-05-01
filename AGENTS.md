@@ -8,13 +8,13 @@ This document provides specific instructions for AI coding assistants (like Anti
 2. **Changelog**: Always add a new entry to `CHANGELOG.md` corresponding to the version bump.
 3. **Description**: Ensure the `"description"` in `manifest.json` reflects all supported platforms (currently ChatGPT, Gemini, and Grok).
 
-## Distribution Zip File (`Save-ChatGPT-Thread.zip`)
+## Distribution Zip File (`Chat-Thread-Saver.zip`)
 
 The zip file is the primary distribution format for the Chrome Web Store.
 
 ### 1. Wait for User Approval
 
-**CRITICAL**: Do NOT recreate or update `Save-ChatGPT-Thread.zip` automatically. You must wait until the USER has explicitly agreed that the new version is ready for distribution.
+**CRITICAL**: Do NOT recreate or update `Chat-Thread-Saver.zip` automatically. You must wait until the USER has explicitly agreed that the new version is ready for distribution.
 
 ### 2. Included Files
 
@@ -40,14 +40,14 @@ Ensure the following are NEVER included in the zip:
 - `PROMPTS.md`
 - `AGENTS.md`
 - `images/` (these are for GitHub/Documentation only)
-- Any previous version of `Save-ChatGPT-Thread.zip`
+- Any previous version of `Chat-Thread-Saver.zip`
 
 ### 4. Creation Command (PowerShell)
 
 To recreate the zip accurately:
 
 ```powershell
-Compress-Archive -Path manifest.json, content.js, popup.html, popup.js, popup.css, icons, LICENSE, README.md, CHANGELOG.md, PRIVACY.md -DestinationPath Save-ChatGPT-Thread.zip -Force
+Compress-Archive -Path manifest.json, content.js, popup.html, popup.js, popup.css, icons, LICENSE, README.md, CHANGELOG.md, PRIVACY.md -DestinationPath Chat-Thread-Saver.zip -Force
 ```
 
 ## Maintenance Standards

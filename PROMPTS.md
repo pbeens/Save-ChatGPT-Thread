@@ -15,5 +15,19 @@ Mission Statement: This file documents the collaborative process between Peter B
 - Fixed ChatGPT extraction logic (transition from `article` to `section`).
 - Consolidated all changes into version `1.2.0` and removed experimental `x.com/i/grok` support.
 - Updated the extension description in `manifest.json` to include Gemini and Grok.
-- Updated the distribution zip file (`Save-ChatGPT-Thread.zip`) with all the latest changes.
+- Updated the distribution zip file (`Chat-Thread-Saver.zip`) with all the latest changes.
 - Created `AGENTS.md` with instructions for version management and zip distribution.
+
+### User Prompt 2 – 2026-05-01 10:02 – Rename to Chat Thread Saver
+
+**Goal:** Update all internal documentation to reflect the new name "Chat Thread Saver".
+
+**Prompt:** In the Chrome extension store, I had to rename it as Chat Thread Saver, so can we update all the internal documentation accordingly?
+
+**Technical Context:**
+
+- Renamed "ChatGPT Thread Saver" to "Chat Thread Saver" in `README.md` and `PRIVACY.md`.
+- Updated `AGENTS.md` to use `Chat-Thread-Saver.zip` as the distribution filename.
+- Bumped version to `1.2.1` in `manifest.json`.
+- Added changelog entry in `CHANGELOG.md` for version `1.2.1`.
+- Logged changes in `PROMPTS.md`.
