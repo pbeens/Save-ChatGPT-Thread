@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Chat Thread Saver",
     "version": "1.2.0",
-    "description": "Save your ChatGPT threads as Markdown files.",
+    "description": "Save your ChatGPT, Gemini, and Grok threads as Markdown files.",
     "permissions": [
         "activeTab",
         "scripting"
