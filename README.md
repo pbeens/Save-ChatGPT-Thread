@@ -1,16 +1,24 @@
 # ChatGPT Thread Saver
 
-A Chrome extension that allows you to save your ChatGPT conversations as Markdown files.
+A Chrome extension that allows you to save your ChatGPT, Google Gemini, and Grok conversations as clean, readable Markdown files.
 
 ## Features
 
 - **One-Click Save**: Easily download the current chat thread with a single click.
-- **Markdown Format**: Saves conversations in a clean, readable Markdown format (`.md`), perfect for archiving or sharing.
-- **Smart Formatting**: Distinguishes between User and ChatGPT messages.
+- **Multi-Platform Support**: Works seamlessly on [ChatGPT](https://chatgpt.com), [Google Gemini](https://gemini.google.com), and [Grok](https://grok.com).
+- **Markdown Preservation**: Saves conversations with formatting (bold, italics, headings, lists, tables, and code blocks) intact.
+- **Math & Science Support**: Correctly handles subscripts (H₂O), superscripts (E=mc²), and LaTeX math formulas.
+- **Shadow DOM Support**: Robust scraping that captures assistant responses even when nested in complex web structures.
 
 ## Installation
 
-Since this extension is not yet in the Chrome Web Store, you need to download the source code and install it manually.
+Install directly from the **Chrome Web Store**:
+
+**[ChatGPT Thread Saver on Chrome Web Store](https://chromewebstore.google.com/detail/chatgpt-thread-saver/monacbfpcobmaoijgepedjklkpknponk)**
+
+### Manual Installation (Alternative)
+
+If you prefer to install it manually from the source code, follow these steps:
 
 **Repository URL**: [https://github.com/pbeens/Save-ChatGPT-Thread](https://github.com/pbeens/Save-ChatGPT-Thread)
 
@@ -45,10 +53,10 @@ git clone https://github.com/pbeens/Save-ChatGPT-Thread.git
 
 ## Usage
 
-1.  Navigate to any [ChatGPT](https://chatgpt.com) conversation.
-2.  Click the **ChatGPT Thread Saver** icon in your browser toolbar (it looks like a chat bubble with an arrow).
+1.  Navigate to any [ChatGPT](https://chatgpt.com), [Gemini](https://gemini.google.com), or [Grok](https://grok.com) conversation.
+2.  Click the **Chat Thread Saver** icon in your browser toolbar.
 3.  In the popup window, click the **Save Chat** button.
-4.  The extension will generate a Markdown file (e.g., `chatgpt-thread-YYYY-MM-DD.md`) and download it to your computer.
+4.  The extension will generate a Markdown file (e.g., `chatgpt-thread-YYYY-MM-DD.md`, `gemini-thread-YYYY-MM-DD.md`, or `grok-thread-YYYY-MM-DD.md`) and download it to your computer.
 
 ## Contributing
 
@@ -57,15 +65,15 @@ Have feedback? Please open an issue:
 - **Bug reports**: Include browser version, OS, extension version, steps to reproduce, and what you expected vs. what happened.
 - **Suggestions**: Describe the improvement and why it helps. Screenshots or brief examples are great.
 
-## Using with Gemini
-
-The extension can also be used on Gemini threads, but formatting isn’t perfect yet—superscripts and subscripts may not render as expected. If you try it there, keep those limitations in mind and feel free to file an issue with examples.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Support
 
-If you find this useful, please [consider buying me a coffee](https://buymeacoffee.com/pbeens)!
+If you encounter any issues, have questions, or would like to suggest an improvement, please **[open an issue on GitHub](https://github.com/pbeens/Save-ChatGPT-Thread/issues)**. 
+
+If you find this extension useful and would like to support its development, please consider buying me a coffee:
+
+[![Buy Me a Coffee](images/bmc-button.png)](https://buymeacoffee.com/pbeens)
 
